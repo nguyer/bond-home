@@ -44,3 +44,8 @@ class Bond:
         r = requests.get(f'http://{self.bondIp}/v2/devices/{deviceId}',
                          headers={'BOND-Token': self.bondToken})
         return r.json()
+
+    def getDeviceState(self, deviceId):
+        r = requests.get(f'http://{self.bondIp}/v2/devices/{deviceId}/state',
+                         headers={'BOND-Token': self.bondToken})
+        return r.json()
