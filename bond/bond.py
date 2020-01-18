@@ -74,7 +74,7 @@ class Bond:
         return self.doAction(deviceId, BOND_DEVICE_ACTION_PRESET)
 
     # Relating to Ceiling Fan (CF)
-    def setFanSpeed(self, deviceId, speed=3):
+    def setSpeed(self, deviceId, speed=3):
         return self.doAction(deviceId, BOND_DEVICE_ACTION_SET_SPEED, {"argument": speed})
 
     def increaseSpeed(self, deviceId, speed=1):
