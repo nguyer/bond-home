@@ -97,8 +97,8 @@ class Bond:
     def turnLightOff(self, deviceId):
         return self.doAction(deviceId, BOND_DEVICE_ACTION_TURN_LIGHT_OFF)
 
-    def toggleLight(self, deviceId): BOND_DEVICE_ACTION_TOGGLE_LIGHT
-    return self.doAction(deviceId, BOND_DEVICE_ACTION_TOGGLE_LIGHT)
+    def toggleLight(self, deviceId):
+        return self.doAction(deviceId, BOND_DEVICE_ACTION_TOGGLE_LIGHT)
 
     # Relating to Fireplace (FP)
     def setFlame(self, deviceId, flame=3):
