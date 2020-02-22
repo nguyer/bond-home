@@ -4,7 +4,7 @@ with open('README.md') as f:
     long_description = f.read()
 
 setup(name='bond-home',
-      version='0.0.6',
+      version='0.0.7',
       description='Python library for controlling BOND Home Hub',
       long_description=long_description,
       long_description_content_type='text/markdown',
