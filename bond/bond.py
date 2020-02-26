@@ -58,7 +58,7 @@ class Bond:
 
     # Relating to Motorized Shades (MS), Dimmers and Garage Doors
     def open(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_CLOSE)
+        return self.doAction(deviceId, BOND_DEVICE_ACTION_OPEN)
 
     def toggleOpen(self, deviceId):
         return self.doAction(deviceId, BOND_DEVICE_ACTION_TOGGLE_OPEN)
