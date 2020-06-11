@@ -79,7 +79,7 @@ class Bond:
         if brightness == 0:
             return self.doAction(deviceId, Actions.TURN_LIGHT_OFF)
 
-        if brightness < Brightness.MIN and brightness > Brightness.MAX:
+        if brightness < Brightness.MIN or brightness > Brightness.MAX:
             raise InvalidBrightnessException
 
         return self.doAction(deviceId, 
