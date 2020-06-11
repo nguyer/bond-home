@@ -55,7 +55,7 @@ class Bond:
                              {"argument": speed})
 
     def setDirection(self, deviceId, direction=Directions.FORWARD):
-        if direction != Directions.FORWARD or direction != Directions.REVERSE:
+        if direction != Directions.FORWARD and direction != Directions.REVERSE:
             raise InvalidDirectionException
 
         return self.doAction(deviceId,
