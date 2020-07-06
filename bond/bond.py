@@ -125,6 +125,13 @@ class Bond:
             raise Exception(r.content)
         return r.content
 
+    def getVersion(self):
+        url = f"http://{self.bondIp}/v2/sys/version"
+        headers = {'BOND-Token': self.bondToken}
+
+        r = requests.get(url, headers=headers)
+        return r.json()
+
     def getDeviceIds(self):
         url = f"http://{self.bondIp}/v2/devices"
         headers = {'BOND-Token': self.bondToken}
