@@ -36,15 +36,18 @@ class Actions:
     INCREASE_FLAME = "IncreaseFlame"
     DECREASE_FLAME = "DecreaseFlame"
 
+
 class DeviceTypes:
     CEILING_FAN = "CF"
     FIREPLACE = "FP"
     MOTORIZED_SHADES = "MS"
     GENERIC_DEVICE = "GX"
 
+
 class Directions:
     FORWARD = 1
     REVERSE = -1
+
 
 class Brightness:
     MIN = 1

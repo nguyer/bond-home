@@ -1,5 +1,6 @@
 import requests
-from bond.const import (Actions,DeviceTypes,Directions,Brightness)
+from bond.const import (Actions, DeviceTypes, Directions, Brightness)
+
 
 class Bond:
     def __init__(self, bondIp, bondToken):
@@ -40,31 +41,30 @@ class Bond:
 
     # Relating to Ceiling Fan (CF)
     def setSpeed(self, deviceId, speed=3):
-        return self.doAction(deviceId,
-                             Actions.SET_SPEED,
+        return self.doAction(deviceId, 
+                             Actions.SET_SPEED, 
                              {"argument": speed})
 
     def increaseSpeed(self, deviceId, speed=1):
-        return self.doAction(deviceId,
-                             Actions.INCREASE_SPEED,
+        return self.doAction(deviceId, 
+                             Actions.INCREASE_SPEED, 
                              {"argument": speed})
 
     def decreaseSpeed(self, deviceId, speed=1):
-        return self.doAction(deviceId,
-                             Actions.DECREASE_SPEED,
+        return self.doAction(deviceId, 
+                             Actions.DECREASE_SPEED, 
                              {"argument": speed})
 
     def setDirection(self, deviceId, direction=Directions.FORWARD):
         if direction != Directions.FORWARD and direction != Directions.REVERSE:
             raise InvalidDirectionException
 
-        return self.doAction(deviceId,
-                             Actions.SET_DIRECTION,
+        return self.doAction(deviceId, 
+                             Actions.SET_DIRECTION, 
                              {"argument": direction})
 
     def toggleDirection(self, deviceId):
         return self.doAction(deviceId, Actions.TOGGLE_DIRECTION)
-
 
     def turnLightOn(self, deviceId):
         return self.doAction(deviceId, Actions.TURN_LIGHT_ON)
@@ -83,23 +83,23 @@ class Bond:
             raise InvalidBrightnessException
 
         return self.doAction(deviceId, 
-                             Actions.SET_BRIGHTNESS,
+                             Actions.SET_BRIGHTNESS, 
                              {"argument": brightness})
 
     # Relating to Fireplace (FP)
     def setFlame(self, deviceId, flame=3):
-        return self.doAction(deviceId,
-                             Actions.SET_FLAME,
+        return self.doAction(deviceId, 
+                             Actions.SET_FLAME, 
                              {"argument": flame})
 
     def increaseFlame(self, deviceId, flame=1):
-        return self.doAction(deviceId,
-                             Actions.INCREASE_FLAME,
+        return self.doAction(deviceId, 
+                             Actions.INCREASE_FLAME, 
                              {"argument": flame})
 
     def decreaseFlame(self, deviceId, flame=1):
-        return self.doAction(deviceId,
-                             Actions.DECREASE_FLAME,
+        return self.doAction(deviceId, 
+                             Actions.DECREASE_FLAME, 
                              {"argument": flame})
 
     def doAction(self, deviceId, action, payload={}):
@@ -143,8 +143,10 @@ class Bond:
         r = requests.get(url, headers=headers)
         return r.json()
 
+
 class InvalidBrightnessException(Exception):
     """Invalid brightness exception"""
+
 
 class InvalidDirectionException(Exception):
     """Invalid direction exception"""
