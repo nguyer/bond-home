@@ -1,42 +1,5 @@
 import requests
-
-BOND_DEVICE_TYPE_CEILING_FAN = "CF"
-BOND_DEVICE_TYPE_FIREPLACE = "FP"
-BOND_DEVICE_TYPE_MOTORIZED_SHADES = "MS"
-BOND_DEVICE_TYPE_GENERIC_DEVICE = "GX"
-
-# Note that Bond Action "Stop" instructs the Bond Bridge to stop sending.
-# There are other actions such as "Hold" that send a message to stop the
-# controlled-device's current action
-BOND_DEVICE_ACTION_STOP = "Stop"
-
-# Relating to Generic Device (GX)
-BOND_DEVICE_ACTION_TURN_ON = "TurnOn"
-BOND_DEVICE_ACTION_TURN_OFF = "TurnOff"
-BOND_DEVICE_ACTION_TOGGLE_POWER = "TogglePower"
-
-# Relating to Motorized Shades (MS), Dimmers and Garage Doors
-BOND_DEVICE_ACTION_OPEN = "Open"
-BOND_DEVICE_ACTION_TOGGLE_OPEN = "ToggleOpen"
-BOND_DEVICE_ACTION_CLOSE = "Close"
-BOND_DEVICE_ACTION_HOLD = "Hold"
-BOND_DEVICE_ACTION_PAIR = "Pair"
-BOND_DEVICE_ACTION_PRESET = "Preset"
-
-# Relating to Ceiling Fan (CF)
-BOND_DEVICE_ACTION_SET_SPEED = "SetSpeed"
-BOND_DEVICE_ACTION_INCREASE_SPEED = "IncreaseSpeed"
-BOND_DEVICE_ACTION_DECREASE_SPEED = "DecreaseSpeed"
-
-BOND_DEVICE_ACTION_TURN_LIGHT_ON = "TurnLightOn"
-BOND_DEVICE_ACTION_TURN_LIGHT_OFF = "TurnLightOff"
-BOND_DEVICE_ACTION_TOGGLE_LIGHT = "ToggleLight"
-
-# Relating to Fireplace (FP)
-BOND_DEVICE_ACTION_SET_FLAME = "SetFlame"
-BOND_DEVICE_ACTION_INCREASE_FLAME = "IncreaseFlame"
-BOND_DEVICE_ACTION_DECREASE_FLAME = "DecreaseFlame"
-
+from bond.const import (Actions, DeviceTypes, Directions, Brightness)
 
 class Bond:
     def __init__(self, bondIp, bondToken):
@@ -44,76 +7,98 @@ class Bond:
         self.bondToken = bondToken
 
     def stop(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_STOP)
+        return self.doAction(deviceId, Actions.STOP)
 
     # Relating to Generic Device (GX)
     def turnOn(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_TURN_ON)
+        return self.doAction(deviceId, Actions.TURN_ON)
 
     def turnOff(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_TURN_OFF)
+        return self.doAction(deviceId, Actions.TURN_OFF)
 
     def togglePower(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_TOGGLE_POWER)
+        return self.doAction(deviceId, Actions.TOGGLE_POWER)
 
     # Relating to Motorized Shades (MS), Dimmers and Garage Doors
     def open(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_OPEN)
+        return self.doAction(deviceId, Actions.OPEN)
 
     def toggleOpen(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_TOGGLE_OPEN)
+        return self.doAction(deviceId, Actions.TOGGLE_OPEN)
 
     def close(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_CLOSE)
+        return self.doAction(deviceId, Actions.CLOSE)
 
     def hold(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_HOLD)
+        return self.doAction(deviceId, Actions.HOLD)
 
     def pair(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_PAIR)
+        return self.doAction(deviceId, Actions.PAIR)
 
     def preset(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_PRESET)
+        return self.doAction(deviceId, Actions.PRESET)
 
     # Relating to Ceiling Fan (CF)
     def setSpeed(self, deviceId, speed=3):
         return self.doAction(deviceId,
-                             BOND_DEVICE_ACTION_SET_SPEED,
+                             Actions.SET_SPEED,
                              {"argument": speed})
 
     def increaseSpeed(self, deviceId, speed=1):
         return self.doAction(deviceId,
-                             BOND_DEVICE_ACTION_INCREASE_SPEED,
+                             Actions.INCREASE_SPEED,
                              {"argument": speed})
 
     def decreaseSpeed(self, deviceId, speed=1):
         return self.doAction(deviceId,
-                             BOND_DEVICE_ACTION_DECREASE_SPEED,
+                             Actions.DECREASE_SPEED,
                              {"argument": speed})
 
+    def setDirection(self, deviceId, direction=Directions.FORWARD):
+        if direction != Directions.FORWARD and direction != Directions.REVERSE:
+            raise InvalidDirectionException
+
+        return self.doAction(deviceId,
+                             Actions.SET_DIRECTION,
+                             {"argument": direction})
+
+    def toggleDirection(self, deviceId):
+        return self.doAction(deviceId, Actions.TOGGLE_DIRECTION)
+
     def turnLightOn(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_TURN_LIGHT_ON)
+        return self.doAction(deviceId, Actions.TURN_LIGHT_ON)
 
     def turnLightOff(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_TURN_LIGHT_OFF)
+        return self.doAction(deviceId, Actions.TURN_LIGHT_OFF)
 
     def toggleLight(self, deviceId):
-        return self.doAction(deviceId, BOND_DEVICE_ACTION_TOGGLE_LIGHT)
+        return self.doAction(deviceId, Actions.TOGGLE_LIGHT)
+
+    def setBrightness(self, deviceId, brightness=Brightness.MIN):
+        if brightness == 0:
+            return self.doAction(deviceId, Actions.TURN_LIGHT_OFF)
+
+        if brightness < Brightness.MIN or brightness > Brightness.MAX:
+            raise InvalidBrightnessException
+
+        return self.doAction(deviceId, 
+                             Actions.SET_BRIGHTNESS,
+                             {"argument": brightness})
 
     # Relating to Fireplace (FP)
     def setFlame(self, deviceId, flame=3):
         return self.doAction(deviceId,
-                             BOND_DEVICE_ACTION_SET_FLAME,
+                             Actions.SET_FLAME,
                              {"argument": flame})
 
     def increaseFlame(self, deviceId, flame=1):
         return self.doAction(deviceId,
-                             BOND_DEVICE_ACTION_INCREASE_FLAME,
+                             Actions.INCREASE_FLAME,
                              {"argument": flame})
 
     def decreaseFlame(self, deviceId, flame=1):
         return self.doAction(deviceId,
-                             BOND_DEVICE_ACTION_DECREASE_FLAME,
+                             Actions.DECREASE_FLAME,
                              {"argument": flame})
 
     def doAction(self, deviceId, action, payload={}):
@@ -163,3 +148,11 @@ class Bond:
 
         r = requests.get(url, headers=headers)
         return r.json()
+
+
+class InvalidBrightnessException(Exception):
+    """Invalid brightness exception"""
+
+
+class InvalidDirectionException(Exception):
+    """Invalid direction exception"""
