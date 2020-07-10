@@ -81,19 +81,19 @@ class Bond:
         if brightness < Brightness.MIN or brightness > Brightness.MAX:
             raise InvalidBrightnessException
 
-        return self.doAction(deviceId, 
+        return self.doAction(deviceId,
                              Actions.SET_BRIGHTNESS,
                              {"argument": brightness})
-    
+
     def startDimmer(self, deviceId):
         return self.doAction(deviceId, Actions.START_DIMMER)
-        
+
     def startUpLightDimmer(self, deviceId):
         return self.doAction(deviceId, Actions.START_UP_LIGHT_DIMMER)
-        
+
     def startDownLightDimmer(self, deviceId):
         return self.doAction(deviceId, Actions.START_DOWN_LIGHT_DIMMER)
-        
+
     # Relating to Fireplace (FP)
     def setFlame(self, deviceId, flame=3):
         return self.doAction(deviceId,

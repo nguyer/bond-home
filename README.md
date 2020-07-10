@@ -1,13 +1,15 @@
 # Bond Home Library for Python
 
 _A Python library for interacting with the Local API of a Bond Home Hub_
-https://bondhome.io/
+<https://bondhome.io/>
 
-Local API Docs: http://docs-local.appbond.com/
+Local API Docs: <http://docs-local.appbond.com/>
 
 ## Installation
 
-    $ pip3 install bond-home
+```bash
+pip3 install bond-home
+```
 
 ## Usage
 
