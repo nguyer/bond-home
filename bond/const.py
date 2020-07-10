@@ -31,6 +31,10 @@ class Actions:
     SET_DIRECTION = "SetDirection"
     TOGGLE_DIRECTION = "ToggleDirection"
 
+    START_DIMMER = "StartDimmer"
+    START_UP_LIGHT_DIMMER = "StartUpLightDimmer"
+    START_DOWN_LIGHT_DIMMER = "StartDownLightDimmer"
+
     # Relating to Fireplace (FP)
     SET_FLAME = "SetFlame"
     INCREASE_FLAME = "IncreaseFlame"
