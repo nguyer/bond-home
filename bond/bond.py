@@ -1,5 +1,7 @@
 import requests
-from bond.const import (Actions, DeviceTypes, Directions, Brightness)
+
+from bond.const import (Actions, Directions, Brightness)
+
 
 class Bond:
     def __init__(self, bondIp, bondToken):
@@ -158,6 +160,20 @@ class Bond:
         r = requests.get(url, headers=headers)
         return r.json()
 
+    def getDeviceCommandIds(self, deviceId):
+        url = f"http://{self.bondIp}/v2/devices/{deviceId}/commands"
+        headers = {'BOND-Token': self.bondToken}
+
+        r = requests.get(url, headers=headers)
+        commands = [key for key in r.json() if key != '_']
+        return commands
+
+    def getDeviceCommand(self, deviceId, commandId):
+        url = f"http://{self.bondIp}/v2/devices/{deviceId}/commands/{commandId}"
+        headers = {'BOND-Token': self.bondToken}
+
+        r = requests.get(url, headers=headers)
+        return r.json()
 
 class InvalidBrightnessException(Exception):
     """Invalid brightness exception"""
